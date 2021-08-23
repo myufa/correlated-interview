@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, UploadFile, File
+from fastapi import APIRouter, HTTPException, Body, UploadFile, File
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import numpy as np
@@ -20,6 +20,8 @@ async def basic():
 
 @router.get('/get', response_model = KeyValueJSON)
 async def get_key(key: str):
+    if key not in db:
+        raise HTTPException(status_code=404, detail="Item not found")
     return { 'key': key, 'value': db[key] }
 
 

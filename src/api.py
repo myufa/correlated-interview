@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from src.app.example import router as example_router
+from src.app.store import router as store_router
 
 origins = [
     "http://localhost",
@@ -27,6 +27,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(example_router, prefix="", tags=["example"])
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(store_router, prefix="", tags=["store"])
